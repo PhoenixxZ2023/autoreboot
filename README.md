@@ -5,13 +5,13 @@
 # ATUALIZAR SISTEMA E INSTALAR SCRIPT CONTRAB-E 2024!
 
 ````
-apt update -y && apt upgrade -y && wget -y; bash <(wget -qO- raw.githubusercontent.com//PhoenixxZ2023/autoreboot/master/ssh-plus)
+apt update -y && apt upgrade -y && wget -y; bash <(wget -qO- raw.githubusercontent.com//PhoenixxZ2023/autoreboot/master/autoreboot.sh)
 ````
 
 # SEGUNDA OPÇÃO PARA INSTALAÇÃO
 
 ````
-apt update -y && apt upgrade -y && wget https://raw.githubusercontent.com//PhoenixxZ2023/autoreboot/master/ssh-plus && chmod 777 ssh-plus && ./ssh-plus
+apt update -y && apt upgrade -y && wget https://raw.githubusercontent.com//PhoenixxZ2023/autoreboot/master/autoreboot.sh && chmod 777 autoreboot.sh && ./autoreboot.sh
 ````
 
 
