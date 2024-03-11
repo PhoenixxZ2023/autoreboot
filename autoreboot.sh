@@ -1,9 +1,5 @@
 #!/bin/bash
 
-sshplus_path="/etc/SSHPlus"
-menu_file="$sshplus_path/menu"
-cron_file="$sshplus_path/crontab"
-
 show_menu() {
     echo "Selecione uma opção:"
     echo "1. Agendar reinicialização do servidor"
@@ -28,7 +24,6 @@ schedule_reboot() {
 
     (crontab -l ; echo "$cron_expression /sbin/shutdown -r now") | crontab -
     echo "Reinicialização agendada com sucesso!"
-    echo "$cron_expression /sbin/shutdown -r now" >> $cron_file
 }
 
 while true
