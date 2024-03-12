@@ -5,7 +5,7 @@
 # ATUALIZAR SISTEMA E INSTALAR SCRIPT CONTRAB-E 2024!
 
 ````
-apt update -y && apt upgrade -y && wget -y; bash <(wget -qO- raw.githubusercontent.com//PhoenixxZ2023/autoreboot/master/autoreboot.sh)
+wget https://raw.githubusercontent.com/PhoenixxZ2023/autoreboot/master/autoreboot.sh && bash autoreboot.sh && autoreboot.sh
 ````
 
 # SEGUNDA OPÇÃO PARA INSTALAÇÃO
