@@ -4,32 +4,32 @@
 check_system() {
     local distro=$(lsb_release -i | cut -f 2)
     if [[ "$distro" != "Debian" && "$distro" != "Ubuntu" ]]; then
-        echo "This script only supports Debian and Ubuntu."
+        echo "Este script suporta apenas Debian e Ubuntu."
         exit 1
     fi
 }
 
 # Function to install cron
 install_cron() {
-    echo "Attempting to install cron..."
+    echo "Tentando instalar o cron..."
     sudo apt-get update
     sudo apt-get install -y cron
     if ! systemctl is-active --quiet cron; then
-        echo "Failed to install or start cron."
+        echo "Falha ao instalar ou iniciar o cron."
         exit 1
     fi
 }
 
 # Check if cron is installed and running
 if ! command -v cron >/dev/null 2>&1 || ! systemctl is-active --quiet cron; then
-    echo "cron is not installed or not running."
-    read -p "Would you like to install cron? [y/N] " response
+    echo "cron não está instalado ou não está em execução."
+    read -p "Você gostaria de instalar o cron? [y/N] " response
     case "$response" in
         [yY][eE][sS]|[yY])
             install_cron
             ;;
         *)
-            echo "This script requires cron to run."
+            echo "Este script requer que o cron seja executado."
             exit 1
             ;;
     esac
@@ -41,11 +41,11 @@ add_reboot_task() {
 
     # Get frequency
     while true; do
-        read -p "Choose the frequency of the reboot task (1. Monthly, 2. Weekly, 3. Daily): " frequency
+        read -p "Escolha a frequência da tarefa de reinicialização (1. Mensalmente, 2. Semanalmente, 3. Diariamente): " frequency
         if [[ $frequency =~ ^[1-3]$ ]]; then
             break
         else
-            echo "Invalid input. Please enter 1, 2, or 3."
+            echo "Entrada inválida. Por favor insira 1, 2 ou 3."
         fi
     done
 
@@ -53,21 +53,21 @@ add_reboot_task() {
     case $frequency in
         1) # Monthly
             while true; do
-                read -p "Enter the day of the month (1-28): " day
+                read -p "Insira o dia do mês (1-28): " day
                 if [[ $day =~ ^[1-9]$|^1[0-9]$|^2[0-8]$ ]]; then
                     break
                 else
-                    echo "Invalid day. Please enter a number between 1 and 28."
+                    echo "Dia inválido. Por favor insira um número entre 1 e 28."
                 fi
             done
             ;;
         2) # Weekly
             while true; do
-                read -p "Enter the day of the week (1-7, where 1 is Monday): " day
+                read -p "Insira o dia da semana (1-7, onde 1 é segunda-feira): " day
                 if [[ $day =~ ^[1-7]$ ]]; then
                     break
                 else
-                    echo "Invalid day. Please enter a number between 1 and 7."
+                    echo "Dia inválido. Por favor insira um número entre 1 e 7."
                 fi
             done
             ;;
@@ -78,21 +78,21 @@ add_reboot_task() {
 
     # Get hour
     while true; do
-        read -p "Enter the hour for reboot (0-23): " hour
+        read -p "Digite a hora para reinicialização (0-23): " hour
         if [[ $hour =~ ^[0-1]?[0-9]$|^2[0-3]$ ]]; then
             break
         else
-            echo "Invalid hour. Please enter a number between 0 and 23."
+            echo "Hora inválida. Por favor insira um número entre 0 e 23."
         fi
     done
 
     # Get minute
     while true; do
-        read -p "Enter the minute for reboot (0-59): " minute
+        read -p "Digite o minuto para reinicialização (0-59): " minute
         if [[ $minute =~ ^[0-5]?[0-9]$ ]]; then
             break
         else
-            echo "Invalid minute. Please enter a number between 0 and 59."
+            echo "Minuto inválido. Por favor insira um número entre 0 e 59."
         fi
     done
 
@@ -112,9 +112,9 @@ add_reboot_task() {
     echo "Adding cron job: $comment"
     (crontab -l 2>/dev/null; echo "# $comment"; echo "$schedule sudo shutdown -r now") | crontab -
     if [ $? -eq 0 ]; then
-        echo "Reboot task added."
+        echo "Tarefa de reinicialização adicionada."
     else
-        echo "Failed to add reboot task. Please check the input format."
+        echo "Falha ao adicionar tarefa de reinicialização. Verifique o formato de entrada."
     fi
 }
 
@@ -146,7 +146,7 @@ list_reboot_tasks() {
 
 # Function to delete a reboot task
 delete_reboot_task() {
-    echo "Select the task number to delete:"
+    echo "Selecione o número da tarefa a ser excluída:"
     
     local IFS=$'\n'
     local task_count=0
@@ -173,11 +173,11 @@ delete_reboot_task() {
 
     # Get user input
     local task_no
-    read -p "Enter the task number: " task_no
+    read -p "Digite o número da tarefa: " task_no
 
     # Validate input
     if ! [[ "$task_no" =~ ^[0-9]+$ ]] || [ $task_no -lt 1 ] || [ $task_no -gt $task_count ]; then
-        echo "Invalid input. Please enter a valid task number."
+        echo "Entrada inválida. Insira um número de tarefa válido."
         return
     fi
 
@@ -186,18 +186,18 @@ delete_reboot_task() {
 
     # Remove the task and its comment line
     crontab -l | sed -e "${delete_line_no}d; $((delete_line_no - 1))d" | crontab -
-    echo "Reboot task deleted."
+    echo "Tarefa de reinicialização excluída."
 }
 
 # Main script starts here
 
 while true; do
     list_reboot_tasks
-    echo "Choose an option:"
-    echo "1. Add a new reboot task"
-    echo "2. Delete an existing reboot task"
-    echo "3. List all reboot tasks"
-    echo "4. Exit"
+    echo "ESCOLHA UMA OPÇÃO:"
+    echo "1. Adicione uma nova tarefa de reinicialização"
+    echo "2. Excluir uma tarefa de reinicialização existente"
+    echo "3. Listar todas as tarefas de reinicialização"
+    echo "4. Sair"
     read -p "Enter your choice: " choice
 
     case $choice in
