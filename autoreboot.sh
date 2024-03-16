@@ -198,7 +198,7 @@ while true; do
     echo "2. Excluir uma tarefa de reinicialização existente"
     echo "3. Listar todas as tarefas de reinicialização"
     echo "4. Sair"
-    read -p "Enter your choice: " choice
+    read -p "Digite sua escolha: " choice
 
     case $choice in
         1) 
@@ -215,7 +215,7 @@ while true; do
             exit 0
             ;;
         *) 
-            echo "Invalid option"; 
+            echo "Opção inválida"; 
             ;;
     esac
 done
